@@ -1,9 +1,9 @@
 resource "aws_eip" "ip-dica-vm-env" {
-  instance = var.spot_instance == "true" ? "${aws_spot_instance_request.dica-vm[0].spot_instance_id}" : "${aws_instance.web[0].id}"
+  instance = var.spot_instance == "true" ? "${aws_spot_instance_request.dica-spot[0].spot_instance_id}" : "${aws_instance.dica-vm[0].id}"
   domain   = "vpc"
 }
 
-resource "aws_spot_instance_request" "dica-vm" {
+resource "aws_spot_instance_request" "dica-spot" {
   ami           = var.instance_ami
   spot_price    = var.spot_price
   instance_type = var.instance_type
@@ -18,7 +18,7 @@ resource "aws_spot_instance_request" "dica-vm" {
   subnet_id = aws_subnet.subnet-uno.id
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "dica-vm" {
   ami                         = var.instance_ami
   instance_type               = var.instance_type
   key_name                    = data.aws_key_pair.devops-local.key_name
