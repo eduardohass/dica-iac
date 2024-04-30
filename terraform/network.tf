@@ -77,6 +77,50 @@ resource "aws_security_group" "ingress-https-dica-vm" {
   }
 }
 
+resource "aws_security_group" "ingress-pgadmin-dica-vm" {
+  name   = "allow-pgadmin-sg"
+  vpc_id = aws_vpc.dica-vm-env.id
+
+  ingress {
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+
+    from_port = 5050
+    to_port   = 5050
+    protocol  = "tcp"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "ingress-api-dica-vm" {
+  name   = "allow-api-sg"
+  vpc_id = aws_vpc.dica-vm-env.id
+
+  ingress {
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+
+    from_port = 8080
+    to_port   = 8080
+    protocol  = "tcp"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_internet_gateway" "dica-vm-env-gw" {
   vpc_id = aws_vpc.dica-vm-env.id
 }
