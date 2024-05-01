@@ -12,9 +12,11 @@ resource "aws_spot_instance_request" "dica-spot" {
   wait_for_fulfillment = "true"
   key_name             = data.aws_key_pair.devops-local.key_name
   count                = var.spot_instance == "true" ? 1 : 0
+  tags = { Name = "dica-vm" }
 
   security_groups = ["${aws_security_group.ingress-ssh-dica-vm.id}", "${aws_security_group.ingress-http-dica-vm.id}",
-  "${aws_security_group.ingress-https-dica-vm.id}"]
+  "${aws_security_group.ingress-https-dica-vm.id}", "${aws_security_group.ingress-pgadmin-dica-vm.id}", 
+  "${aws_security_group.ingress-api-dica-vm.id}"]
   subnet_id = aws_subnet.subnet-uno.id
 }
 
