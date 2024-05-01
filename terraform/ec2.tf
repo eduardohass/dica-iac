@@ -29,6 +29,18 @@ resource "aws_instance" "dica-vm" {
   vpc_security_group_ids = ["${aws_security_group.ingress-ssh-dica-vm.id}", "${aws_security_group.ingress-http-dica-vm.id}",
   "${aws_security_group.ingress-https-dica-vm.id}"]
   count = var.spot_instance == "true" ? 0 : 1
+
+  user_data = <<-EOF
+    #!/bin/bash
+    set -ex
+    apt-get update && apt-get install -y apt-transport-https
+    curl -fsSL https://get.docker.com | bash
+    sudo service docker start
+    sudo usermod -a -G docker $USER
+    sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+  EOF
+
   tags = {
     Name = "dica-vm"
   }
