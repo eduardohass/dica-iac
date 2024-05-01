@@ -30,7 +30,7 @@ variable "spot_price" {
 }
 variable "spot_type" {
   type        = string
-  default     = "one-time"
+  default     = "persistent"
   description = "Spot instance type, this value only applies for spot instance type."
 }
 variable "spot_instance" {
