@@ -4,7 +4,7 @@ output "ubuntu_ip" {
 }
 
 output "db_endpoint" {
-  value = aws_db_instance.default.endpoint
+  value = aws_db_instance.dica_database.endpoint
 }
 
 output "db_dsn" {
