@@ -33,3 +33,11 @@ variable "spot_instance" {
   default     = "false"
   description = "This value is true if we want to use a spot instance instead of a regular one"
 }
+variable "db_username" {
+  type = string
+  default = "dica_admin"
+}
+variable "db_password" {
+  type = string
+  default = "DicaAdmin321!#"
+}

@@ -121,6 +121,30 @@ resource "aws_security_group" "ingress-api-dica-vm" {
   }
 }
 
+resource "aws_security_group" "rds_sg" {
+  name        = "rds_sg"
+  description = "Allow traffic to RDS"
+  vpc_id      = aws_vpc.dica-vm-env.id
+
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Ajuste conforme necessário
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "My RDS Security Group"
+  }
+}
+
 resource "aws_internet_gateway" "dica-vm-env-gw" {
   vpc_id = aws_vpc.dica-vm-env.id
 }
