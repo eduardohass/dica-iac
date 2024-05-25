@@ -13,11 +13,6 @@ variable "instance_type" {
   type    = string
   default = "t4g.medium"
 }
-# variable "ssh_pub_path" {
-#   type        = string
-#   default     = "~/.ssh/id_rsa.pub"
-#   description = "Path to public key to use to login to the server"
-# }
 variable "instance_ami" {
   type        = string
   default     = "ami-03e1711813e5a07b1"
