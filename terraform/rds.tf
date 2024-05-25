@@ -2,9 +2,9 @@ resource "aws_db_instance" "dica_database" {
   allocated_storage   = 20
   engine              = "postgres"
   engine_version      = "16.1"
-  identifier          = "dica-postgres-db"
+  identifier          = "dica_postgres_db"
   instance_class      = "db.t3.micro"
-  username            = "dica-admin"
+  username            = "dica_admin"
   password            = "DicaAdmin321!#"
   skip_final_snapshot = true
   storage_encrypted   = false
