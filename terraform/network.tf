@@ -3,17 +3,50 @@ resource "aws_vpc" "dica-vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = {
-    "Name" = "dica-vpc",
+    "Name"      = "dica-vpc",
     "managedby" = "terraform"
   }
 }
 
-# resource "aws_subnet" "subnet-uno" {
-#   # creates a subnet
-#   cidr_block        = cidrsubnet(aws_vpc.dica-vpc.cidr_block, 3, 1)
-#   vpc_id            = aws_vpc.dica-vpc.id
-#   availability_zone = var.aws_availability_zone
-# }
+resource "aws_subnet" "sub-a" {
+  cidr_block        = "10.0.1.0/24"
+  vpc_id            = aws_vpc.dica-vpc.id
+  availability_zone = var.aws_availability_zone_a
+  tags = {
+    "Name" = "sub-a",
+    "managedby" = "terraform"
+  }
+}
+
+resource "aws_subnet" "sub-b" {
+  cidr_block        = "10.0.2.0/24"
+  vpc_id            = aws_vpc.dica-vpc.id
+  availability_zone = var.aws_availability_zone_a
+  tags = {
+    "Name" = "sub-b",
+    "managedby" = "terraform"
+  }
+}
+
+resource "aws_subnet" "sub-c" {
+  cidr_block        = "10.0.3.0/24"
+  vpc_id            = aws_vpc.dica-vpc.id
+  availability_zone = var.aws_availability_zone_b
+  tags = {
+    "Name" = "sub-c",
+    "managedby" = "terraform"
+  }
+}
+
+resource "aws_subnet" "sub-d" {
+  cidr_block        = "10.0.4.0/24"
+  vpc_id            = aws_vpc.dica-vpc.id
+  availability_zone = var.aws_availability_zone_b
+  tags = {
+    "Name" = "sub-d",
+    "managedby" = "terraform"
+  }
+}
 
 # resource "aws_security_group" "ingress-ssh-dica-vm" {
 #   name   = "allow-ssh-sg"

@@ -5,9 +5,13 @@ variable "region" {
 variable "cidr_block" {
   default = "10.0.0.0/16"
 }
-variable "aws_availability_zone" {
+variable "aws_availability_zone_a" {
   type    = string
   default = "us-east-1a"
+}
+variable "aws_availability_zone_b" {
+  type    = string
+  default = "us-east-1b"
 }
 variable "instance_type" {
   type    = string
@@ -34,10 +38,10 @@ variable "spot_instance" {
   description = "This value is true if we want to use a spot instance instead of a regular one"
 }
 variable "db_username" {
-  type = string
+  type    = string
   default = "dica_admin"
 }
 variable "db_password" {
-  type = string
+  type    = string
   default = "DicaAdmin321!#"
 }
