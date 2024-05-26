@@ -50,6 +50,62 @@ resource "aws_subnet" "sub-d" {
   }
 }
 
+resource "aws_route_table" "dica-vpc-rt-pub" {
+  vpc_id = aws_vpc.dica-vpc.id
+
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = aws_internet_gateway.dica-vm-gw.id
+  # }
+
+  tags = {
+    "Name"      = "dica-vpc-rt-pub",
+    "managedby" = "terraform"
+  }
+}
+
+resource "aws_route_table" "dica-vpc-rt-priv" {
+  vpc_id = aws_vpc.dica-vpc.id
+
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = aws_internet_gateway.dica-vm-gw.id
+  # }
+
+  tags = {
+    "Name"      = "dica-vpc-rt-priv",
+    "managedby" = "terraform"
+  }
+}
+
+resource "aws_route_table_association" "dica-vpc-subnet-pub-association-a" {
+  subnet_id      = aws_subnet.sub-a.id
+  route_table_id = aws_route_table.dica-vpc-rt-pub.id
+}
+
+resource "aws_route_table_association" "dica-vpc-subnet-pub-association-c" {
+  subnet_id      = aws_subnet.sub-c.id
+  route_table_id = aws_route_table.dica-vpc-rt-pub.id
+}
+
+resource "aws_route_table_association" "dica-vpc-subnet-priv-association-b" {
+  subnet_id      = aws_subnet.sub-b.id
+  route_table_id = aws_route_table.dica-vpc-rt-priv.id
+}
+
+resource "aws_route_table_association" "dica-vpc-subnet-priv-association-d" {
+  subnet_id      = aws_subnet.sub-d.id
+  route_table_id = aws_route_table.dica-vpc-rt-priv.id
+}
+
+resource "aws_internet_gateway" "dica-vpc-igw" {
+  vpc_id = aws_vpc.dica-vpc.id
+  tags = {
+    "Name"      = "dica-vpc-igw",
+    "managedby" = "terraform"
+  }
+}
+
 # resource "aws_security_group" "ingress-ssh-dica-vm" {
 #   name   = "allow-ssh-sg"
 #   vpc_id = aws_vpc.dica-vpc.id
@@ -184,54 +240,3 @@ resource "aws_subnet" "sub-d" {
 #   }
 # }
 
-# resource "aws_internet_gateway" "dica-vm-gw" {
-#   vpc_id = aws_vpc.dica-vpc.id
-# }
-
-resource "aws_route_table" "dica-vpc-rt-pub" {
-  vpc_id = aws_vpc.dica-vpc.id
-
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.dica-vm-gw.id
-  # }
-
-  tags = {
-    "Name"      = "dica-vpc-rt-pub",
-    "managedby" = "terraform"
-  }
-}
-
-resource "aws_route_table" "dica-vpc-rt-priv" {
-  vpc_id = aws_vpc.dica-vpc.id
-
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.dica-vm-gw.id
-  # }
-
-  tags = {
-    "Name"      = "dica-vpc-rt-priv",
-    "managedby" = "terraform"
-  }
-}
-
-resource "aws_route_table_association" "dica-vpc-subnet-pub-association-a" {
-  subnet_id      = aws_subnet.sub-a.id
-  route_table_id = aws_route_table.dica-vpc-rt-pub.id
-}
-
-resource "aws_route_table_association" "dica-vpc-subnet-pub-association-c" {
-  subnet_id      = aws_subnet.sub-c.id
-  route_table_id = aws_route_table.dica-vpc-rt-pub.id
-}
-
-resource "aws_route_table_association" "dica-vpc-subnet-priv-association-b" {
-  subnet_id      = aws_subnet.sub-b.id
-  route_table_id = aws_route_table.dica-vpc-rt-priv.id
-}
-
-resource "aws_route_table_association" "dica-vpc-subnet-priv-association-d" {
-  subnet_id      = aws_subnet.sub-d.id
-  route_table_id = aws_route_table.dica-vpc-rt-priv.id
-}
