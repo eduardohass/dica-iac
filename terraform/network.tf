@@ -53,10 +53,11 @@ resource "aws_subnet" "sub-d" {
 resource "aws_route_table" "dica-vpc-rt-pub" {
   vpc_id = aws_vpc.dica-vpc.id
 
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.dica-vm-gw.id
-  # }
+  # association with IGW to access the internet
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.dica-vpc-igw.id
+  }
 
   tags = {
     "Name"      = "dica-vpc-rt-pub",
@@ -66,11 +67,6 @@ resource "aws_route_table" "dica-vpc-rt-pub" {
 
 resource "aws_route_table" "dica-vpc-rt-priv" {
   vpc_id = aws_vpc.dica-vpc.id
-
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.dica-vm-gw.id
-  # }
 
   tags = {
     "Name"      = "dica-vpc-rt-priv",
