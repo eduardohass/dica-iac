@@ -12,6 +12,7 @@ resource "aws_db_instance" "dica_database" {
   apply_immediately      = true
   vpc_security_group_ids = [aws_security_group.ingress-rds-pg.id]
   db_subnet_group_name   = aws_db_subnet_group.dica_rds_subnet_group.name
+  depends_on             = [aws_db_subnet_group.dica_rds_subnet_group]
   tags = {
     "Name"      = "dica"
     "managedby" = "terraform"
@@ -26,4 +27,20 @@ resource "aws_db_subnet_group" "dica_rds_subnet_group" {
     Name        = "Dica RDS Postgres Subnet Group"
     "managedby" = "terraform"
   }
+}
+
+# Criação do novo banco de dados no RDS
+resource "null_resource" "dica" {
+  provisioner "local-exec" {
+    command = <<EOT
+      PGPASSWORD=var.db_password psql -h ${aws_db_instance.dica_database.endpoint} -U ${aws_db_instance.dica_database.username} -d postgres -c "CREATE DATABASE dica;"
+    EOT
+    environment = {
+      PGPASSWORD = var.db_password
+    }
+  }
+
+  depends_on = [
+    aws_db_instance.dica_database
+  ]
 }
