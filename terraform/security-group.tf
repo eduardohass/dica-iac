@@ -19,6 +19,10 @@ resource "aws_security_group" "ingress-ssh" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    "Name"      = "ingress-ssh"
+    "managedby" = "terraform"
+  }
 }
 
 resource "aws_security_group" "ingress-http" {
@@ -40,6 +44,10 @@ resource "aws_security_group" "ingress-http" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    "Name"      = "ingress-http"
+    "managedby" = "terraform"
   }
 }
 
@@ -63,6 +71,10 @@ resource "aws_security_group" "ingress-https" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    "Name"      = "ingress-https"
+    "managedby" = "terraform"
+  }
 }
 
 resource "aws_security_group" "ingress-pgadmin" {
@@ -84,6 +96,10 @@ resource "aws_security_group" "ingress-pgadmin" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    "Name"      = "ingress-pgadmin"
+    "managedby" = "terraform"
   }
 }
 
@@ -107,10 +123,15 @@ resource "aws_security_group" "ingress-api" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    "Name"      = "ingress-api"
+    "managedby" = "terraform"
+  }
 }
 
 resource "aws_security_group" "ingress-rds-pg" {
-  name        = "rds_sg"
+  name        = "ingress-rds-pg"
   description = "Allow traffic to RDS"
   vpc_id      = aws_vpc.dica-vpc.id
 
@@ -129,7 +150,8 @@ resource "aws_security_group" "ingress-rds-pg" {
   }
 
   tags = {
-    Name = "My RDS Security Group"
+    "Name"      = "PG RDS SG"
+    "managedby" = "terraform"
   }
 }
 
