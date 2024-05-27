@@ -33,7 +33,8 @@ resource "aws_db_subnet_group" "dica_rds_subnet_group" {
 resource "null_resource" "dica" {
   provisioner "local-exec" {
     command = <<EOT
-      sudo apt-get update && sudo apt install postgresql postgresql-contrib -y
+      cat /etc/os-release
+      apt-get update && apt install postgresql postgresql-contrib -y
       PGPASSWORD=${var.db_password} psql -h ${aws_db_instance.dica_database.endpoint} -U ${aws_db_instance.dica_database.username} -d postgres -c "CREATE DATABASE dica;"
     EOT
     environment = {
