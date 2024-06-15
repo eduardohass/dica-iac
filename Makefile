@@ -6,11 +6,19 @@
 
 all: plan
 
+fmt: 
+	cd terraform && \
+	terraform fmt --recursive
+
+validate: 
+	cd terraform && \
+	terraform validate
+
 init:
 	cd terraform && \
 	terraform init
 
-plan: init
+plan: init fmt validate
 	cd terraform && \
 	terraform plan 
 
